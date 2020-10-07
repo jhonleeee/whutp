@@ -1,5 +1,61 @@
 <template>
   <div class="analize">
+      <div class="text-center">
+    <v-bottom-sheet
+      v-model="sheet"
+      inset
+    >
+      <template v-slot:activator="{ on, attrs }">
+        <v-btn
+          color="orange"
+          dark
+          v-bind="attrs"
+          v-on="on"
+        >
+          Open Inset
+        </v-btn>
+      </template>
+      <v-sheet
+        class="text-center"
+        height="300px"
+        style="overflow-y:scroll;"
+      >
+        <v-btn
+          class="mt-6"
+          text
+          color="error"
+          @click="sheet = !sheet"
+        >
+          close
+        </v-btn>
+        <div class="my-3">
+           <v-simple-table dense fixed-header>
+    <template v-slot:default>
+      <thead>
+        <tr>
+          <th class="text-left">
+            Name
+          </th>
+          <th class="text-left">
+            Calories
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="item in desserts"
+          :key="item.name"
+        >
+          <td>{{ item.name }}</td>
+          <td>{{ item.calories }}</td>
+        </tr>
+      </tbody>
+    </template>
+  </v-simple-table>
+        </div>
+      </v-sheet>
+    </v-bottom-sheet>
+  </div>
     <!--place to place SnackBars-->
     <!--Normal notification-->
     <v-snackbar  v-model="snackbarNoti" outlined color="blue">
@@ -127,13 +183,14 @@ export default {
         url: requestUrl,
       })
         .then((response) => {
-          console.log(response.data);
+          this.snackbarNoti=false;
           this.courseData = response.data;
       this.snackbarNotiText="信息加载完成";
        this.snackbarNoti=true;
         })
         .catch((error) => {
           console.log(error.statusText);
+          this.snackbarNoti=false;
                 this.snackbarText="信息加载失败";
       this.snackbarReload=true;
         });
@@ -152,6 +209,48 @@ export default {
       snackbarText: 'Hello, I\'m a snackbar',
       snackbarReload:false,
       snackbarNotiText:"",
+        desserts: [
+          {
+            name: 'Frozen Yogurt',
+            calories: 159,
+          },
+          {
+            name: 'Ice cream sandwich',
+            calories: 237,
+          },
+          {
+            name: 'Eclair',
+            calories: 262,
+          },
+          {
+            name: 'Cupcake',
+            calories: 305,
+          },
+          {
+            name: 'Gingerbread',
+            calories: 356,
+          },
+          {
+            name: 'Jelly bean',
+            calories: 375,
+          },
+          {
+            name: 'Lollipop',
+            calories: 392,
+          },
+          {
+            name: 'Honeycomb',
+            calories: 408,
+          },
+          {
+            name: 'Donut',
+            calories: 452,
+          },
+          {
+            name: 'KitKat',
+            calories: 518,
+          },
+        ],
       courseData: {
         semesterCount: 8,
         courseData: [
@@ -287,4 +386,5 @@ export default {
   margin-bottom: 35px;
   position: relative;
 }
+
 </style>

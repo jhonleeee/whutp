@@ -1,8 +1,8 @@
 <template>
   <v-hover v-slot:default="{ hover }">
+      <v-slide-x-transition>
     <v-card
       class="cCard"
-     
       transition="slide-x-transition"
       :elevation="hover ? 6 : 2"
     >
@@ -22,6 +22,7 @@
               @click="copyCorseInfo"
               class="course-card-expand-button"
             >{{copyBtn}}</v-btn>
+       
             <v-btn
               block
               color="secondary"
@@ -41,14 +42,16 @@
         <!-- <p class="course-card-text-background"></p> -->
         <div class="d-flex flex-row course-card-badge-row">
           <v-chip :class="courseTypeMainColor" text-color="white">
-            <v-avatar left :class="courseTypeBadgeColor">{{courseMajor}}</v-avatar>选修
+            <v-avatar left :class="courseTypeBadgeColor">{{majorDic[course.major]}}</v-avatar>{{cTypeDic[course.type]}}
           </v-chip>
           <v-chip :color="creditBadgeColor" text-color="white">
             <v-avatar left class="light-blue lighten-1">{{course.credit}}</v-avatar>学分
           </v-chip>
         </div>
       </v-card-text>
+      <div class="have-rely-triangle" v-if="course.solo!=1"></div>
     </v-card>
+      </v-slide-x-transition>
   </v-hover>
 </template>
 <script>
@@ -110,7 +113,17 @@ export default {};
 .course-card-badge-row > span {
   margin-right: 5px;
 }
-
+.have-rely-triangle{
+width:0;
+height:0;
+border-left:7px solid transparent;
+border-bottom:7px solid grey;
+position: absolute;
+right:0px;
+bottom:0px;
+border-bottom-left-radius:0px !important;
+border-bottom-right-radius:0px !important;
+}
 </style>
 <script>
 export default {
@@ -150,9 +163,6 @@ export default {
     },
   },
   computed: {
-    courseMajor(){
-      return this.majorDic[this.course.major];
-    },
     creditBadgeColor() {
       let credit = this.course.credit;
       if(credit<=1){
@@ -193,7 +203,11 @@ export default {
         return "orange darken-2";
       }
     }else if(this.course.major==3){
-      return "deep-orange darken-2";
+            if(this.course.type==0){
+        return "deep-orange lighten-1";
+      }else{
+        return "deep-orange darken-2";
+      }
     }
   }
 
@@ -204,8 +218,8 @@ export default {
       hover: false,
       copyBtn: "复制课名",
       copyBtnOnSuccess: false,
-      majorDic:['空','计','软','双'],
-      cTypeDic:['选修','必修','通选']
+      majorDic:['空','计','软','通'],
+      cTypeDic:['选修','必修']
     };
   },
 };

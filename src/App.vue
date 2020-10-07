@@ -25,7 +25,7 @@
         hide-details
       ></v-checkbox>
       <v-progress-circular
-        v-if="isLoading"
+        v-if="true"
         :width="3"
         indeterminate
         color="white"
@@ -33,7 +33,7 @@
     </v-app-bar>
     <DRAWER
       @expand-bar="collapseOnScroll = $event"
-      bg="https://pbs.twimg.com/media/EZ0jwFkUEAAVpgb?format=jpg&name=900x900"
+      bg="https://pbs.twimg.com/media/EjuiYmOVkAU0ziS?format=jpg&name=large"
       ref="drawer"
       @mouseleave="collapseOnScroll = true"
     ></DRAWER>
@@ -42,9 +42,12 @@
         id="maincontainer"
         class="maincontainer"
         @wheel="scrollTopBarShow"
-        @setloadings="setloading"
+        @setloadings="setloading" 
+         transition="scale-transition"
       >
-        <ANALIZE></ANALIZE>
+      <v-slide-x-transition>
+        <router-view></router-view>
+        </v-slide-x-transition>
       </v-container>
     </v-main>
   </v-app>
@@ -53,15 +56,11 @@
 <script>
 //import {jsPlumb} from 'jsplumb';//https://zhuanlan.zhihu.com/p/41808577
 import DRAWER from "./components/drawer";
-import ANALIZE from "./components/analize";
-
 export default {
   name: "App",
 
   components: {
-    //  TP,
     DRAWER,
-    ANALIZE,
   },
   computed: {
     appBarShow() {
@@ -123,7 +122,6 @@ export default {
       this.$refs.drawer.drawer = true;
     },
     setloading(isLoading) {
-      console.log("sasasa");
       if (isLoading) {
         this.isLoading = true;
       } else {
@@ -150,6 +148,7 @@ export default {
       collapseScrollCombo: 0,
       collapseScrollInvokeCount: 1,
       isLoading: false,
+      show:false
     };
   },
 };
@@ -166,7 +165,11 @@ mini-Scroll-Bar::-webkit-scrollbar {
 .v-navigation-drawer--is-mobile {
   margin-top: 55px;
 }
+
 /*.v-toolbar--collapsed{
   max-width: 150px !important;
 }*/
+::-webkit-scrollbar{
+display: none !important;
+}
 </style>
