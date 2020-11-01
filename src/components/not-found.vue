@@ -45,7 +45,6 @@ svg {
   top: 50%;
   left: 50%;
     margin-top:-120px;
-  color: grey;
   font-family: Roboto;
   font-weight: 300;
   background-color: rgb(255, 255, 255,0.1);

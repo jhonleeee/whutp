@@ -27,7 +27,6 @@
   white-space: nowrap;
   background-color: rgb(255, 255, 255,0.3) !important;
   backdrop-filter: blur(2px);
-  color:grey;
   font-weight: bold;
   border:grey solid 1px;
   padding-right: 3px !important;

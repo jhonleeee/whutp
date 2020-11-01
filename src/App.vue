@@ -1,5 +1,5 @@
 <template>
-  <v-app class="light-bg mini-Scroll-Bar" id="app">
+  <v-app class=" mini-Scroll-Bar" id="app" :class="{'light-bg':!this.$vuetify.theme.dark,'dark-bg':this.$vuetify.theme.dark,}">
     <v-app-bar
       :collapse="!appBarShow"
       :collapse-on-scroll="appBarShow"
@@ -8,7 +8,7 @@
       clipped-left
       dark
       scroll-target="#app"
-      style="z-index: 9999"
+      style="z-index: 9999;"
       :class="{ isLoading: isLoading }"
     >
       <!--scrool-target can't work-->
@@ -18,22 +18,26 @@
       <v-toolbar-title>前置课程确认</v-toolbar-title>
 
       <v-spacer></v-spacer>
-
+      <!--Lock the App bar-->
       <v-checkbox
         v-model="collapseLock"
         color="white"
         hide-details
       ></v-checkbox>
+      <!--Sign if loading-->
+       <v-expand-x-transition>
       <v-progress-circular
-        v-if="true"
+        v-show="isLoading"
         :width="3"
         indeterminate
         color="white"
       ></v-progress-circular>
+       </v-expand-x-transition>
     </v-app-bar>
+    <!--App drawer-contains navigation tags and style setting options-->
     <DRAWER
       @expand-bar="collapseOnScroll = $event"
-      bg="https://pbs.twimg.com/media/EjuiYmOVkAU0ziS?format=jpg&name=large"
+      :bg="drawerBg"
       ref="drawer"
       @mouseleave="collapseOnScroll = true"
     ></DRAWER>
@@ -42,11 +46,10 @@
         id="maincontainer"
         class="maincontainer"
         @wheel="scrollTopBarShow"
-        @setloadings="setloading" 
          transition="scale-transition"
       >
       <v-slide-x-transition>
-        <router-view></router-view>
+        <router-view @set-loading="setLoading"></router-view>
         </v-slide-x-transition>
       </v-container>
     </v-main>
@@ -55,10 +58,10 @@
 
 <script>
 //import {jsPlumb} from 'jsplumb';//https://zhuanlan.zhihu.com/p/41808577
-import DRAWER from "./components/drawer";
+import DRAWER from "./components/drawer";//Drawer in the left side of App
+import DRAWERBG from '@/assets/image/bg/drawerImg.jpeg'//background img of App drawer
 export default {
   name: "App",
-
   components: {
     DRAWER,
   },
@@ -67,6 +70,9 @@ export default {
       if (this.collapseLock) return true;
       else return this.collapseOnScroll;
     },
+    drawerBg(){
+      return DRAWERBG;
+    }
   },
   methods: {
     scrollTopBarShow(e) {
@@ -121,7 +127,11 @@ export default {
     showDrawer() {
       this.$refs.drawer.drawer = true;
     },
-    setloading(isLoading) {
+    showMsg(val){
+      console.log(val);
+    },
+    setLoading(isLoading) {
+      console.log("envolked");
       if (isLoading) {
         this.isLoading = true;
       } else {
@@ -130,6 +140,11 @@ export default {
     },
   },
   mounted: function () {
+    if (window.matchMedia('prefers-color-scheme: dark').matches) {//sele theme base on user browser setting
+ this.$vuetify.theme.dark=true;
+} else {
+  this.$vuetify.theme.dark=false;
+}
     //let jsPlumbIns = jsPlumb.getInstance();
     //  jsPlumbIns.ready(function () {
     //       jsPlumbIns.connect({
@@ -142,12 +157,12 @@ export default {
   },
   data() {
     return {
-      alert: true,
-      collapseOnScroll: true,
-      collapseLock: false,
+      alert: true,//showing alert
+      collapseOnScroll: true,//obsoleted
+      collapseLock: false,//always expand the app bar
       collapseScrollCombo: 0,
       collapseScrollInvokeCount: 1,
-      isLoading: false,
+      isLoading: true,//app bar loding circle
       show:false
     };
   },
@@ -162,14 +177,14 @@ mini-Scroll-Bar::-webkit-scrollbar {
   background-image: url(./assets/memphis-colorful.png) !important;
   background-repeat: repeat !important;
 }
+.dark-bg{
+    background-image: url(./assets/memphis-colorful-dark.png) !important;
+  background-repeat: repeat !important;
+}
 .v-navigation-drawer--is-mobile {
   margin-top: 55px;
 }
-
-/*.v-toolbar--collapsed{
-  max-width: 150px !important;
-}*/
-::-webkit-scrollbar{
-display: none !important;
+.v-toolbar--collapsed{
+border-bottom-right-radius: 24px !important;
 }
 </style>

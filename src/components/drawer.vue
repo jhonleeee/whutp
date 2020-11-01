@@ -10,6 +10,7 @@
   >
     <div
       class="glassBox"
+      :class="{dark:this.$vuetify.theme.dark}"
       @mouseenter="$emit('expand-bar',true)"
       @mouseleave="$emit('expand-bar',false)"
     >
@@ -78,5 +79,9 @@ export default {
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
   height: 100%;
+  transition-duration: 0.5s;
+}
+.glassBox.dark{
+  background-color: rgba(0, 0, 0, 0.3);
 }
 </style>
