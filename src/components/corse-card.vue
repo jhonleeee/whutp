@@ -33,23 +33,23 @@
               @click="seleIt"
               class="course-card-expand-button"
               v-if="!course.haveLearned==1"
-            >{{course.haveSele!=1?'选择该课':"取消选中"}}</v-btn>
+            >{{course.haveSele!=1?$t('courseCard.seleCourse'):$t('courseCard.deseleCourse')}}</v-btn>
                      <v-btn
               block
               class="course-card-expand-button"
               v-if="course.haveLearned==1" 
-            disabled>该课已修</v-btn>
+            disabled>{{$t('courseCard.learntCourse')}}</v-btn>
             <v-btn
               block
               @click="loadRely"
               :disabled="course.solo==1"
               class="course-card-expand-button"
-            >{{course.solo==1?"暂无依赖":"前置课程"}}</v-btn>
+            >{{course.solo==1?$t('courseCard.noRely'):$t('courseCard.showRely')}}</v-btn>
             <v-btn
               block
               @click="copyCorseInfo"
               class="course-card-expand-button"
-            >了解更多</v-btn>
+            >{{$t('courseCard.more')}}</v-btn>
      </div>
             
           </div>
@@ -157,7 +157,7 @@ export default {
         console.log(JSON.stringify(this.course));
         navigator.clipboard.writeText(this.course.name).then(
           function () {
-            that.copyBtn = "复制信息";
+            that.copyBtn =that.$i18n.t('courseCard.copyDetail');
             that.copyBtnOnSuccess = true;
           },
           function () {
@@ -166,7 +166,7 @@ export default {
         );
       }
       setTimeout(() => {
-        that.copyBtn = "复制课名";
+        that.copyBtn =that.$i18n.t('courseCard.copyName');
         that.copyBtnOnSuccess = false;
       }, "2000");
     },

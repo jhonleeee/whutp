@@ -1,6 +1,6 @@
 <template>
   <div class="analize">
-    <div @click="test">dfdsofhsduoihsd</div>
+    <div @click="test">{{$t('common.homo')}}</div>
     <!--place to place SnackBars-->
     <!--Normal notification-->
     <v-snackbar v-model="snackbarNoti" outlined color="blue">
@@ -74,22 +74,49 @@
                     <!--Analyze all the courses-->
                     所有课程分析
                     <div class="my-3">
-                      <v-simple-table dense fixed-header>
-                        <template v-slot:default>
-                          <thead>
-                            <tr>
-                              <th class="text-left">Name</th>
-                              <th class="text-left">Calories</th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            <tr v-for="item in desserts" :key="item.name">
-                              <td>{{ item.name }}</td>
-                              <td>{{ item.calories }}</td>
-                            </tr>
-                          </tbody>
-                        </template>
-                      </v-simple-table>
+                      <v-simple-table  fixed-header v-if="seletedCourseData!=null">
+    <template v-slot:default>
+      <thead>
+        <tr>
+          <th class="text-center">
+            课程名
+          </th>
+          <th class="text-center">
+            课程类型
+          </th>
+                    <th class="text-center">
+            学分
+          </th>
+          <th class="text-center">
+            成绩
+          </th>
+                    <th class="text-center">
+            绩点
+          </th>
+          <th class="text-center">
+            选修学期
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="course in seletedCourseData.Courses"
+          :key="course.Cid"
+        >
+          <td>{{ course.name }}</td>
+          <td>{{ course.Ctype }}</td>
+              <td>{{ course.point }}</td>
+          <td>{{ course.score==""?"-": course.score}}</td>
+                <td>{{ course.GPA==-1?"-":course.GPA }}</td>
+                      <td>{{ course.year+'-'+course.semester }}</td>
+          
+        </tr>
+      </tbody>
+    </template>
+  </v-simple-table>
+  <div v-else>
+    还没有添加成绩记录...
+  </div>
                     </div>
                   </v-card-text>
                 </v-card>
@@ -216,9 +243,9 @@
       PARABAR
     },
     methods: {
-
       test(){
         this.$vuetify.theme.dark=!this.$vuetify.theme.dark;
+        this.$i18n.locale='en';
         this.$emit('set-loading',true);
         console.log("sss");
         console.log(this.courseData);
@@ -363,7 +390,9 @@
                   })
                 }
               })
-        console.log(JSON.stringify(rawCourseData));
+        rawCourseData.Courses.sort((a,b)=>{
+          return a.year==b.year?a.semester-b.semester:a.year-b.year;
+        })
         return rawCourseData;
             /*this.courseData.courseData.forEach(
               (seme)=>{

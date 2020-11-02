@@ -50,13 +50,13 @@ export default {
     year: function () {
       let termCount = parseInt(this.BarId);
       let schoolYear = Math.floor((termCount - 1) / 3);
-      let yearDic = ["一", "二", "三", "四"];
+      let yearDic = [this.$i18n.t('paraBar.freshman'),this.$i18n.t('paraBar.Sophomore'),this.$i18n.t('paraBar.jumior'),this.$i18n.t('paraBar.senior')];
       return `${yearDic[schoolYear]}`;
     },
     semi:function(){
       let termCount = parseInt(this.BarId);
        let term = termCount % 3;
-        let termDic = ["三学期", "上学期", "下学期"];
+        let termDic = [this.$i18n.t('paraBar.thirdSeme'),this.$i18n.t('paraBar.firstSeme'),this.$i18n.t('paraBar.secondSeme')];
   return termDic[term];
     }
   },

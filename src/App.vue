@@ -60,6 +60,7 @@
 //import {jsPlumb} from 'jsplumb';//https://zhuanlan.zhihu.com/p/41808577
 import DRAWER from "./components/drawer";//Drawer in the left side of App
 import DRAWERBG from '@/assets/image/bg/drawerImg.jpeg'//background img of App drawer
+
 export default {
   name: "App",
   components: {

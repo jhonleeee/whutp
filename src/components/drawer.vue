@@ -53,11 +53,6 @@ export default {
         avarta:
           "https://dss0.bdstatic.com/6Ox1bjeh1BF3odCf/it/u=2761782935,4166989354&fm=74&app=80&f=PNG&size=f121,121?sec=1880279984&t=9abf9ce3f6f313603ad9d3a367d3f67a",
       },
-      items: [
-        { title: "课程关系", icon: "mdi-view-dashboard" },
-        { title: "学分统计", icon: "mdi-image" },
-        { title: "关于", icon: "mdi-help-box" },
-      ],
       color: "primary",
       colors: ["primary", "blue", "success", "red", "teal"],
       right: false,
@@ -67,9 +62,11 @@ export default {
     };
   },
   computed: {
-    //   bg () {
-    //     return this.background ? 'https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg' : undefined
-    //   },
+     items:function(){return [
+        { title: this.$i18n.t('drawer.relyGraph'), icon: "mdi-view-dashboard" },
+        { title:  this.$i18n.t('drawer.creditCount'), icon: "mdi-image" },
+        { title: this.$i18n.t('drawer.about'), icon: "mdi-help-box" },
+      ]}
   },
 };
 </script>

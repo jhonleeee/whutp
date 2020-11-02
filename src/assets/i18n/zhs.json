@@ -1,0 +1,29 @@
+{
+    "common":{
+        "homo":"首页"
+},
+    "drawer":{
+        "relyGraph":"课程关系",
+        "creditCount":"学分统计",
+        "about":"关于"
+    },
+    "paraBar":{
+        "freshman":"一",
+        "Sophomore":"二",
+        "jumior":"三",
+        "senior":"四",
+        "firstSeme":"上学期",
+        "secondSeme":"下学期",
+        "thirdSeme":"三学期"
+    },
+    "courseCard":{
+        "copyName":"复制课名",
+        "copyDetail":"复制详情",
+        "seleCourse":"选中该课",
+        "deseleCourse":"取消该课",
+        "learntCourse":"已选修",
+        "showRely":"课程依赖",
+        "noRely":"暂无依赖",
+        "more":"更多信息"
+    }
+}

@@ -1,0 +1,29 @@
+{
+    "common":{
+        "homo":"homePage"
+},
+"drawer":{
+    "relyGraph":"Course relationship",
+    "creditCount":"Credits statistics",
+    "about":"About"
+},
+"paraBar":{
+    "freshman":"Ⅰ",
+    "Sophomore":"Ⅱ",
+    "jumior":"Ⅲ",
+    "senior":"Ⅳ",
+    "firstSeme":"1st Se.",
+    "secondSeme":"2nd Se.",
+    "thirdSeme":"3rd Se."
+},
+"courseCard":{
+    "copyName":"Copy Name",
+    "copyDetail":"Copy Detail",
+    "seleCourse":"Select",
+    "deseleCourse":"Deselect",
+    "learntCourse":"Learnt",
+    "showRely":"Show Rely",
+    "noRely":"No Rely",
+    "more":"More Info"
+}
+}
