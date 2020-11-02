@@ -5,7 +5,10 @@
 "drawer":{
     "relyGraph":"Course relationship",
     "creditCount":"Credits statistics",
-    "about":"About"
+    "about":"About",
+    "setting":"Setting",
+    "theme":"Theme",
+    "language":"Language"
 },
 "paraBar":{
     "freshman":"Ⅰ",

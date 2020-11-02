@@ -5,7 +5,10 @@
     "drawer":{
         "relyGraph":"课程关系",
         "creditCount":"学分统计",
-        "about":"关于"
+        "about":"关于",
+        "setting":"设定",
+        "theme":"主题",
+        "language":"语言"
     },
     "paraBar":{
         "freshman":"一",

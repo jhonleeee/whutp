@@ -25,7 +25,23 @@
             <v-list-item-subtitle>{{user.bio}}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
-
+        <v-list-group :value="true" prepend-icon="mdi-cog-outline">
+    <template v-slot:activator>
+        <v-list-item-title>{{$t('drawer.setting')}}</v-list-item-title>
+    </template>
+    <v-list-item link @click="changeTheme">
+              <v-list-item-icon>
+            <v-icon>mdi-theme-light-dark</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>{{$t('drawer.theme')}}</v-list-item-title>
+    </v-list-item>
+    <v-list-item link @click="changeLanguage">
+              <v-list-item-icon>
+            <v-icon>mdi-translate</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>{{$t('drawer.language')}}</v-list-item-title>
+    </v-list-item>
+</v-list-group>
         <v-divider></v-divider>
 
         <v-list-item v-for="item in items" :key="item.title" link>
@@ -48,8 +64,8 @@ export default {
     return {
       drawer: true,
       user: {
-        name: "Demo用户",
-        bio: "伊布伊布布依bui~",
+        name: "计算机科学与技术",
+        bio: "2018级",
         avarta:
           "https://dss0.bdstatic.com/6Ox1bjeh1BF3odCf/it/u=2761782935,4166989354&fm=74&app=80&f=PNG&size=f121,121?sec=1880279984&t=9abf9ce3f6f313603ad9d3a367d3f67a",
       },
@@ -68,6 +84,18 @@ export default {
         { title: this.$i18n.t('drawer.about'), icon: "mdi-help-box" },
       ]}
   },
+  methods:{
+    changeTheme:function(){
+      this.$vuetify.theme.dark=!this.$vuetify.theme.dark;
+    },
+    changeLanguage:function(){
+      if(this.$i18n.locale=='zh'){
+        this.$i18n.locale='en';
+      }else{
+          this.$i18n.locale='zh'
+      }
+    }
+  }
 };
 </script>
 <style scoped>
