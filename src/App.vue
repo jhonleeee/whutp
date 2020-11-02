@@ -1,5 +1,5 @@
 <template>
-  <v-app class=" mini-Scroll-Bar" id="app" :class="{'light-bg':!this.$vuetify.theme.dark,'dark-bg':this.$vuetify.theme.dark,}">
+  <v-app class="mini-Scroll-Bar" id="app" :class="{'light-bg':!this.$vuetify.theme.dark,'dark-bg':this.$vuetify.theme.dark,}">
     <v-app-bar
       :collapse="!appBarShow"
       :collapse-on-scroll="appBarShow"
@@ -187,5 +187,8 @@ mini-Scroll-Bar::-webkit-scrollbar {
 }
 .v-toolbar--collapsed{
 border-bottom-right-radius: 24px !important;
+}
+#app{
+  overflow: scroll !important;
 }
 </style>

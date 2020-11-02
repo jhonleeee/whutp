@@ -1,14 +1,14 @@
 import ANALIZE from "./components/analize";
 import NOTFOUND from "./components/not-found"
-import IFRAMEBROWSER from "./components/iframe-browser"
+import courseTable from "./components/courseTable";
 export default {
   routes: [
-    { path: '/iframe', component: IFRAMEBROWSER },
     {
-      path: '/', component: ANALIZE, meta: {
+      path: '/analyze', component: ANALIZE, meta: {
         keepAlive: true
       }
     },
+    {path:'/graph',component:courseTable},
     { path: '*', component: NOTFOUND }
   ]
 };

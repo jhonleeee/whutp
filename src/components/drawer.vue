@@ -44,7 +44,7 @@
 </v-list-group>
         <v-divider></v-divider>
 
-        <v-list-item v-for="item in items" :key="item.title" link>
+        <v-list-item v-for="item in items" :key="item.title" link :to="item.link">
           <v-list-item-icon>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-icon>
@@ -79,9 +79,9 @@ export default {
   },
   computed: {
      items:function(){return [
-        { title: this.$i18n.t('drawer.relyGraph'), icon: "mdi-view-dashboard" },
-        { title:  this.$i18n.t('drawer.creditCount'), icon: "mdi-image" },
-        { title: this.$i18n.t('drawer.about'), icon: "mdi-help-box" },
+        { title: this.$i18n.t('drawer.relyGraph'), icon: "mdi-view-dashboard",link:"/graph" },
+        { title:  this.$i18n.t('drawer.creditCount'), icon: "mdi-image" ,link:"/analyze"},
+        { title: this.$i18n.t('drawer.about'), icon: "mdi-help-box",link:"/about"},
       ]}
   },
   methods:{
