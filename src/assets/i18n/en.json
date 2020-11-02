@@ -24,6 +24,12 @@
     "learntCourse":"Learnt",
     "showRely":"Show Rely",
     "noRely":"No Rely",
-    "more":"More Info"
+    "more":"More Info",
+    "clearRely":"Clr Rely",
+    "bdgpre":"Rely",
+    "bdgWatch":"Watching",
+    "bdgSele":"Selected",
+    "bdgLearnt":"Learnt",
+    "credit":"Credit"
 }
 }

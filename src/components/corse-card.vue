@@ -44,7 +44,14 @@
               @click="loadRely"
               :disabled="course.solo==1"
               class="course-card-expand-button"
+              v-if="!course.isWatch==1"
             >{{course.solo==1?$t('courseCard.noRely'):$t('courseCard.showRely')}}</v-btn>
+             <v-btn
+              block
+              @click="clearRely"
+              v-if="course.isWatch==1"
+              class="course-card-expand-button"
+            >{{$t('courseCard.clearRely')}}</v-btn>
             <v-btn
               block
               @click="copyCorseInfo"
@@ -58,9 +65,10 @@
       <v-card-text class="d-flex flex-column" style="height:100%">
         <p class="course-card-name">
           {{course.name}}
-          <v-chip x-small color="light-blue" text-color="white" style="margin-left: 10px;" v-if="course.isPre==1">前置课程</v-chip>
-          <v-chip x-small color="cyan" text-color="white" style="margin-left: 10px;" v-if="course.haveSele==1&&course.haveLearned!=1">已选中</v-chip>
-          <v-chip x-small color="teal" text-color="white" style="margin-left: 10px;" v-if="course.haveLearned==1">已选修</v-chip>
+          <v-chip x-small color="light-blue" text-color="white" style="margin-left: 10px;" v-if="course.isPre==1">{{$t('courseCard.bdgpre')}}</v-chip>
+          <v-chip x-small color="blue darken-3" text-color="white" style="margin-left: 10px;" v-if="course.isWatch==1">{{$t('courseCard.bdgWatch')}}</v-chip>
+          <v-chip x-small color="cyan" text-color="white" style="margin-left: 10px;" v-if="course.haveSele==1&&course.haveLearned!=1">{{$t('courseCard.bdgSele')}}</v-chip>
+          <v-chip x-small color="teal" text-color="white" style="margin-left: 10px;" v-if="course.haveLearned==1">{{$t('courseCard.bdgLearnt')}}</v-chip>
         </p>
         <!-- <p>课程备注</p> -->
         <p class="course-card-text-background" v-if="course.haveLearned==1">{{course.report.GPA>=0?course.report.GPA:"-"}}</p>
@@ -69,7 +77,7 @@
             <v-avatar left :class="courseTypeBadgeColor">{{majorDic[course.major]}}</v-avatar>{{cTypeDic[course.type]}}
           </v-chip>
           <v-chip :color="creditBadgeColor" text-color="white">
-            <v-avatar left class="light-blue lighten-1">{{course.credit}}</v-avatar>学分
+            <v-avatar left class="light-blue lighten-1">{{course.credit}}</v-avatar>{{$t('courseCard.credit')}}
           </v-chip>
         </div>
       </v-card-text>
@@ -171,8 +179,10 @@ export default {
       }, "2000");
     },
     loadRely() {
-      console.log(this.course.CId);
-      this.$emit("load-rely", this.course.CId);
+      this.$emit("show-rely", this.course.course_id);
+    },
+    clearRely(){
+      this.$emit("clear-rely");
     },
     seleIt(){//seleAcourse
     //Vue.set(this.course,'haveSele',1);

@@ -24,6 +24,12 @@
         "learntCourse":"已选修",
         "showRely":"课程依赖",
         "noRely":"暂无依赖",
-        "more":"更多信息"
+        "more":"更多信息",
+        "clearRely":"取消查看",
+        "bdgpre":"前置课程",
+        "bdgWatch":"查看中",
+        "bdgSele":"已选中",
+        "bdgLearnt":"已选修",
+        "credit":"学分"
     }
 }

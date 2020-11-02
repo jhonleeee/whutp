@@ -30,13 +30,15 @@
       <v-divider inset></v-divider>
       <div v-if="termData.course.length > 0" transition="slide-x-transition" class="columbox"
         @wheel.prevent.stop="scrollBarWheel" name="columBox">
-        <div class="columbox-acrylic" name="acrylic" v-if="showAcrylic" @click="hideRely">
+        <!-- 
+          ABANDONED: old style of showing rely
+          <div class="columbox-acrylic" name="acrylic" v-if="showAcrylic" @click="hideRely">
           <COURSECARD v-on:show-rely="showRely" :haveHover="haveHover" name="courseCard"
             v-for="course in termData.course" :key="'relyk' + course.course_id" :course="course"
             :id="'relyk' + course.course_id"></COURSECARD>
-        </div>
-        <COURSECARD  v-on:show-rely="showRely" :haveHover="haveHover" name="courseCard" v-for="course in termData.course"
-          :key="'k' + course.course_id" :course="course" :id="'k' + course.course_id"></COURSECARD>
+        </div> -->
+        <COURSECARD  @show-rely="loadRely" @clear-rely="clearRely" :haveHover="haveHover" name="courseCard" v-for="course in termData.course"
+          :key="'k' + course.course_id" :course="course" :id="'k' + course.course_id" v-show="!showingRely||course.isPre==1||course.isWatch==1"></COURSECARD>
       </div>
       <div v-else class="noClassInfoBox">
         <div class="noClassInfo">该学期没有课程</div>
@@ -284,11 +286,6 @@
           }
         }
       },
-      showRely(e) {
-        this.haveHover = false;
-        this.showAcrylic = true;
-        console.log(e);
-      },
       hideRely() {
         this.haveHover = true;
         this.showAcrylic = false;
@@ -334,6 +331,7 @@
                   course.haveLearned = 0;
                   course.report = null;
                   course.isPre=0;
+                  course.isWatch=0;
                 }
               });
             })
@@ -420,15 +418,21 @@
             )*/
           },
             loadRely(cid) {//Load course's rely
+            if(this.showingRely){
+              this.clearRely();
+            }
             if (cid <0) return;
         this.$parent.$emit("setloadings", true);
-        let requestUrl = encodeURI(this.APIUrl + "?cid="+cid);
+        let requestUrl = encodeURI(this.APIUrl + "before?cid="+cid);
         axios({
             method: "get",
             url: requestUrl,
           })
           .then((response) => {
-            const relyArr = JSON.parse(response.data).course;
+            console.log("red Start");
+            this.showingRely=true;
+            const relyArr = response.data.course;
+            console.log(relyArr);
             if(relyArr==null||relyArr.length<=0){//Err:have 
             throw("Course rely empty");
             }
@@ -436,17 +440,24 @@
             relyArr.forEach((relyCourse)=>{
               relyCid.push(relyCourse.course_id);
             })
-            console.log(relyCid);
-            relyCid.some((relyCourseId)=>{
-              this.courseData.forEach((course)=>{
-                if(course.id==relyCourseId){
+            this.courseData.courseData.forEach((seme)=>{
+                seme.course.forEach((course) => {
+                  if(cid==course.course_id){
+                    course.isWatch=1;
+                  }
+                  var isRely = false;
+                  relyCid.some((relyCid)=>{
+                    if(relyCid==course.course_id){
+                    isRely=true;
+                    return true;}
+                  })
+                  if(isRely){
                   course.isPre=1;
-                  return true;
                 }
+                });
               })
-            })
             this.snackbarNoti = false;
-            console.log()
+            this.$parent.$emit("setloadings", false);
           })
           .catch((error) => {
             console.log(error.statusText);
@@ -456,9 +467,18 @@
           });
           this.$emit("set-loading", false);
       },
+      clearRely(){//Exit relying mode
+        this.courseData.courseData.forEach((seme)=>{
+                seme.course.forEach((course) => {
+                  course.isPre=0;
+                  course.isWatch=0;
+                })
+                });
+        this.showingRely=false;
+      }
       },
       computed:{
-        creditSele:function(){
+        creditSele:function(){//Cacu credit enquirment
           var creditSele={'compulsory':0,'elective':0};
           var compCredit = 0;
           var elecCredit = 0;
@@ -487,7 +507,7 @@
           APIUrlCourseRely:"http://39.108.211.7/family/before",
           courseLength: 2,
           overlay: true,
-          showAcrylic: false,
+         // showAcrylic: false,
           scrollSpeed: 70,
           haveHover: true,
           snackbarNoti: false,
@@ -495,6 +515,7 @@
           snackbarReload: false,
           snackbarNotiText: "",
           dialFab: false,
+          showingRely:false,//if showing the rely of courses
           /*basic summery of selected course-BEGIN*/
           seleCourseCount: 0,
           seleElectiveCourseCount: 0,
