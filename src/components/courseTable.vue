@@ -3,7 +3,7 @@
         <div>待加载项：{{loading_item}}</div>
         <div>已加载项：{{loaded_item}}</div>
         <div>红色指向较高级，绿色来自前置课程</div>
-        <graph id="graph1" v-if="!hideGraph" style="overflow:scroll !important"></graph>
+        <graph id="graph1" style="overflow:scroll !important"></graph>
     </div>
 </template>
 
@@ -24,8 +24,7 @@
             loaded_item:0,
             mounted_flag:false,
             courses_search:[],
-            semester_height_point:[],
-            hideGraph:false
+            semester_height_point:[]
         }),
         created() {
             this.semester_height_point = new Array(20);
@@ -45,10 +44,6 @@
             this.mounted_flag = true;
             this.$emit('set-loading',true);
         },
-        destroyed() {
-           console.log("我已经离开了！");
-            this.hideGraph=true;
- },
         methods:{
             data_process(){
 axios({ method: "get",
@@ -99,10 +94,10 @@ axios({ method: "get",
 
             },
             create_dataMap(){
-                console.log("node list",this.node_list);
-                console.log("link list",this.link_list);
+                // console.log("node list",this.node_list);
+                // console.log("link list",this.link_list);
 
-                console.log('create')
+                // console.log('create')
                 const svg = d3.select("graph")
                     .append('svg')
                     .attr('width', 1800)

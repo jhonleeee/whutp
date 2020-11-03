@@ -132,7 +132,6 @@ export default {
       console.log(val);
     },
     setLoading(isLoading) {
-      console.log("envolked");
       if (isLoading) {
         this.isLoading = true;
       } else {

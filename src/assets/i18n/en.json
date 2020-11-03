@@ -34,5 +34,10 @@
     "bdgSele":"Selected",
     "bdgLearnt":"Learnt",
     "credit":"Credit"
+},
+"notfound":{
+    "info":"This page is still missing...",
+    "back":"Back",
+    "home":"Home"
 }
 }

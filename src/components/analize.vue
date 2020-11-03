@@ -1,6 +1,5 @@
 <template>
   <div class="analize">
-    <div @click="test">{{$t('common.homo')}}</div>
     <!--place to place SnackBars-->
     <!--Normal notification-->
     <v-snackbar v-model="snackbarNoti" outlined color="blue">
@@ -48,11 +47,6 @@
     <!--Float sheet-current courses-->
     <div class="text-center">
       <v-bottom-sheet v-model="coursesheet" inset>
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn color="orange" dark v-bind="attrs" v-on="on">
-            Open Inset
-          </v-btn>
-        </template>
         <v-sheet class="text-center" height="400px" style="overflow-y: scroll">
           <v-card>
             <v-toolbar color="cyan" dark flat>
@@ -111,7 +105,6 @@
           <td>{{ course.score==""?"-": course.score}}</td>
                 <td>{{ course.GPA==-1?"-":course.GPA }}</td>
                       <td>{{ course.year+'-'+course.semester }}</td>
-          
         </tr>
       </tbody>
     </template>
@@ -179,7 +172,7 @@
                             </v-textarea>
                           </v-col>
                         </v-row>
-                        <v-btn color="primary" @click="checkAndAdd">
+                        <v-btn color="primary" @click="checkAndAdd(true)">
                           导入信息
                         </v-btn>
                         <v-btn text @click="steperAddCourse = 2"> 返回 </v-btn>
@@ -213,11 +206,8 @@
       <v-btn fab dark small color="green" @click="openSeleSheet">
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
-      <v-btn fab dark small color="indigo">
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-      <v-btn fab dark small color="red" >
-        <v-icon>mdi-delete</v-icon>
+            <v-btn fab dark small color="light-green" @click="sortCourse">
+        <v-icon>mdi-sort</v-icon>
       </v-btn>
     </v-speed-dial>
     <div id="creditCounter">
@@ -229,7 +219,6 @@
           </v-chip>
     </div>
     <!--Testing component-->
-    <v-btn elevation="2" @click="requestFullCourse(1)">sssss</v-btn>
   </div>
 </template>
 <script>
@@ -244,13 +233,21 @@
       COURSECARD,
       PARABAR
     },
+    mounted:function(){
+
+      const localCourseData = localStorage.getItem("courseData");
+      if(localCourseData!=null){
+        this.courseData = JSON.parse(localCourseData);
+        this.checkAndAdd();
+      }else{
+        this.requestFullCourse(1);
+      }
+    },
     methods: {
       test(){
         this.$vuetify.theme.dark=!this.$vuetify.theme.dark;
         this.$i18n.locale='en';
         this.$emit('set-loading',true);
-        console.log("sss");
-        console.log(this.courseData);
       },
       scrollBarWheel(e) {
         //make course row scrollable with mouse whell
@@ -291,14 +288,12 @@
         this.showAcrylic = false;
       },
       openSeleSheet(){
-        console.log("open");
         this.coursesheet=true;
       },
       requestFullCourse(listId = 1) {
-        console.log(listId);
         this.snackbarNotiText = "加载课程信息中";
         this.snackbarNoti = true;
-        this.$parent.$emit("setloadings", true);
+        this.$parent.$emit("set-loading", true);
         let requestUrl = encodeURI(this.APIUrl + "detail");
         axios({
             method: "get",
@@ -309,6 +304,7 @@
             this.courseData = this.initCourse(response.data);
             this.snackbarNotiText = "信息加载完成";
             this.snackbarNoti = true;
+            this.checkAndAdd();
           })
           .catch((error) => {
             console.log(error.statusText);
@@ -345,25 +341,28 @@
         this.courseData.courseData.forEach((seme)=>{
           //for each semester
           seme.course.sort(function(a,b){return a.major>b.major?-1:1;});
-          console.log(seme);
         });
       }
       ,
-      checkAndAdd() {
+      checkAndAdd(overide=false) {
         //parse and check the formart of course score Json
         try {
-          const data = localStorage.getItem("Ldata");
+          if(!overide){
+          var data = localStorage.getItem("Ldata");
+          }else{
+          data = this.parseCourseJson;
+          }
           var courseObj = JSON.parse(data);
           this.seletedCourseData = courseObj;
           this.initSeleCourse(courseObj);
           if (courseObj.Count >= 0) {
             this.steperAddCourse = 4;
+            localStorage.setItem("Ldata",data);
             this.initSeleCourse();
           } else {
             this.parseCourseJson = "解析成功但是信息出现错误";
           }
         } catch (e) {
-          console.log(this.parseCourseJson);
           console.log(e);
           this.parseCourseJson = "解析错误" + e.detail;
         }
@@ -429,10 +428,8 @@
             url: requestUrl,
           })
           .then((response) => {
-            console.log("red Start");
             this.showingRely=true;
             const relyArr = response.data.course;
-            console.log(relyArr);
             if(relyArr==null||relyArr.length<=0){//Err:have 
             throw("Course rely empty");
             }

@@ -3,6 +3,7 @@ import NOTFOUND from "./components/not-found"
 import courseTable from "./components/courseTable";
 export default {
   routes: [
+    { path: '/', redirect: '/analyze' },
     {
       path: '/analyze', component: ANALIZE, meta: {
         keepAlive: true

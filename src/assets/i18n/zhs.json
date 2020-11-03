@@ -34,5 +34,10 @@
         "bdgSele":"已选中",
         "bdgLearnt":"已选修",
         "credit":"学分"
+    },
+    "notfound":{
+        "info":"这个页面还没有被开拓...",
+        "back":"上一页",
+        "home":"首页"
     }
 }

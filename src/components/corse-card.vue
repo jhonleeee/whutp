@@ -162,7 +162,7 @@ export default {
           }
         );
       } else {
-        console.log(JSON.stringify(this.course));
+
         navigator.clipboard.writeText(this.course.name).then(
           function () {
             that.copyBtn =that.$i18n.t('courseCard.copyDetail');
@@ -191,10 +191,6 @@ export default {
     }else{
       this.course.haveSele=1;
     }
-    },
-    aaaa(){
-      console.log("aaaa");
-     console.log(this.course.haveLearned);
     }
   }
 }

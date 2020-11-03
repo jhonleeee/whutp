@@ -79,8 +79,8 @@ export default {
   },
   computed: {
      items:function(){return [
-        { title: this.$i18n.t('drawer.relyGraph'), icon: "mdi-view-dashboard",link:"/graph" },
-        { title:  this.$i18n.t('drawer.creditCount'), icon: "mdi-image" ,link:"/analyze"},
+        { title: this.$i18n.t('drawer.relyGraph'), icon: "mdi-graph",link:"/graph" },
+        { title:  this.$i18n.t('drawer.creditCount'), icon: "mdi-view-dashboard" ,link:"/analyze"},
         { title: this.$i18n.t('drawer.about'), icon: "mdi-help-box",link:"/about"},
       ]}
   },

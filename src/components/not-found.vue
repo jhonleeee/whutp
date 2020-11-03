@@ -11,11 +11,11 @@
 </svg>
 <div class="message-box">
   <h1>404</h1>
-  <p>这个页面还没有开拓...</p>
+  <p>{{$t("notfound.info")}}</p>
   <div class="buttons-con">
     <div class="action-link-wrap">
-      <a onclick="history.back(-1)"><v-btn>上一页</v-btn></a>
-      <a href=""><v-btn color="primary">首页</v-btn></a>
+      <a onclick="history.back(-1)"><v-btn>{{$t("notfound.back")}}</v-btn></a>
+      <a href="/"><v-btn color="primary">{{$t("notfound.home")}}</v-btn></a>
     </div>
   </div>
 </div>

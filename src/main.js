@@ -4,6 +4,7 @@ import routes from "./router.config.js"
 import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import VueI18n from 'vue-i18n'
+import './registerServiceWorker'
 //import i18n from './i18n.config.js'
 
 Vue.config.productionTip = false;
