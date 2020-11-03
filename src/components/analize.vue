@@ -295,7 +295,7 @@
         this.snackbarNotiText = "加载课程信息中";
         this.snackbarNoti = true;
         this.$parent.$emit("set-loading", true);
-        let requestUrl = encodeURI(this.APIUrl + "detail");
+        let requestUrl = encodeURI(this.APIUrl + "detail.php");
         axios({
             method: "get",
             url: requestUrl,
@@ -423,7 +423,7 @@
             }
             if (cid <0) return;
         this.$parent.$emit("setloadings", true);
-        let requestUrl = encodeURI(this.APIUrl + "before?cid="+cid);
+        let requestUrl = encodeURI(this.APIUrl + "before.php?cid="+cid);
         axios({
             method: "get",
             url: requestUrl,
@@ -501,8 +501,8 @@
       },
       data() {
         return {
-          APIUrl: "http://39.108.211.7/family/",
-          APIUrlCourseRely:"http://39.108.211.7/family/before",
+          APIUrl: "https://migu.plus/whutp/api/",
+          APIUrlCourseRely:"https://migu.plus/whutp/api/before",
           courseLength: 2,
           overlay: true,
          // showAcrylic: false,

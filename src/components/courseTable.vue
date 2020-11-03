@@ -47,7 +47,7 @@
         methods:{
             data_process(){
 axios({ method: "get",
-            url: "http://39.108.211.7/family/detail",
+            url: "https://migu.plus/whutp/api/detail.php",
           }).then( function (response) {
                         this.courses_table = response.data;
                         this.courses_table.courseData.forEach(function(semester){
@@ -72,7 +72,7 @@ axios({ method: "get",
                                     this.loading_item++;//record loading process
                                    axios({
             method: "get",
-            url: "http://39.108.211.7/family/before?cid="+course.course_id,
+            url: "https://migu.plus/whutp/api/before.php?cid="+course.course_id,
           }).then(function(response){
                                             response.data.course.forEach(function(prev_course){
                                                 this.link_list.push({
