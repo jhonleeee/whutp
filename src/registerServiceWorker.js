@@ -2,7 +2,7 @@
 
 import { register } from 'register-service-worker'
 //var cacheName = 'whutp-v1';
-// if (process.env.NODE_ENV === 'production') {
+ if (process.env.NODE_ENV === 'production') {
   if ('serviceWorker' in navigator) {
   register(`${process.env.BASE_URL}service-worker.js`, {
     ready () {
@@ -37,4 +37,4 @@ import { register } from 'register-service-worker'
     console.log('[Service Worker] Fetched resource '+e.request.url);
 });
 }
-// }
+}

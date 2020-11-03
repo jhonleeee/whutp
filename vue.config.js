@@ -1,7 +1,11 @@
+const BASE_URL = process.env.NODE_ENV === 'production'
+? '/whutp/'
+: '/';
 module.exports = {
   "transpileDependencies": [
     "vuetify"
   ],
+  publicPath:BASE_URL,
   pwa: {
     name: '培养方案分析',
     themeColor: '#35a0da',
@@ -13,8 +17,8 @@ module.exports = {
     workboxOptions: {
       runtimeCaching: [
         {
-          urlPattern: new RegExp('.*'),
-          handler: 'cacheFirst',
+          urlPattern: new RegExp('whutp'),
+          handler: 'NetworkFirst',
           options: {
             networkTimeoutSeconds: 20,
             cacheName: 'api-cache',

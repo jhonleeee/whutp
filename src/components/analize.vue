@@ -291,6 +291,7 @@
         this.coursesheet=true;
       },
       requestFullCourse(listId = 1) {
+        console.log(listId);
         this.snackbarNotiText = "加载课程信息中";
         this.snackbarNoti = true;
         this.$parent.$emit("set-loading", true);
