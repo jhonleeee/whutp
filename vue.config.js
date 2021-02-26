@@ -15,6 +15,8 @@ module.exports = {
     // configure the workbox plugin
     workboxPluginMode: 'GenerateSW',
     workboxOptions: {
+      cacheId:'whutpV0.01',
+      cleanupOutdatedCaches:true,
       runtimeCaching: [
         {
           urlPattern: new RegExp('whutp'),

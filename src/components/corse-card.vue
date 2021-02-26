@@ -54,7 +54,7 @@
             >{{$t('courseCard.clearRely')}}</v-btn>
             <v-btn
               block
-              @click="copyCorseInfo"
+              @click="handleSyllabus"
               class="course-card-expand-button"
             >{{$t('courseCard.more')}}</v-btn>
      </div>
@@ -177,6 +177,9 @@ export default {
         that.copyBtn =that.$i18n.t('courseCard.copyName');
         that.copyBtnOnSuccess = false;
       }, "2000");
+    },
+    handleSyllabus(){
+     this.$router.push({path:`document/${this.course.course_id}`})
     },
     loadRely() {
       this.$emit("show-rely", this.course.course_id);

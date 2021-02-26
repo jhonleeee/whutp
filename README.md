@@ -35,3 +35,9 @@ Note: Cats are better than dogs. They just are.
 ```
 ### Let's learn more about Promise, which is widly used in service worker
 [Dev.blog](https://developers.google.com/web/fundamentals/primers/promises)
+### 真的很后悔  
+为什么我当时没上ts，现在各个类型的处理把我整晕了  
+啊当时vue2不支持ts啊，那没事了  
+但是eslint总得有吧  
+但是现在上eslint怕不是要变成一地猩红（指报错）  
+还是算了（啥子哦）  

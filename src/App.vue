@@ -41,17 +41,17 @@
       ref="drawer"
       @mouseleave="collapseOnScroll = true"
     ></DRAWER>
-    <v-main>
-      <v-container
-        id="maincontainer"
+    <v-main
+            id="maincontainer"
         class="maincontainer"
         @wheel="scrollTopBarShow"
          transition="scale-transition"
-      >
+    >
+
       <v-slide-x-transition>
         <router-view @set-loading="setLoading"></router-view>
         </v-slide-x-transition>
-      </v-container>
+
     </v-main>
   </v-app>
 </template>
