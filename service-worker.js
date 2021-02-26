@@ -14,10 +14,10 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/whutp/precache-manifest.b64f33dd1ab20419f53c3675e025b175.js"
+  "/whutp/precache-manifest.8ab4a161b9b0f26a3a2c87fee8eed657.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "whutp"});
+workbox.core.setCacheNameDetails({prefix: "whutpV0.01"});
 
 self.addEventListener('message', (event) => {
   if (event.data && event.data.type === 'SKIP_WAITING') {
@@ -32,5 +32,7 @@ self.addEventListener('message', (event) => {
  */
 self.__precacheManifest = [].concat(self.__precacheManifest || []);
 workbox.precaching.precacheAndRoute(self.__precacheManifest, {});
+
+workbox.precaching.cleanupOutdatedCaches();
 
 workbox.routing.registerRoute(/whutp/, new workbox.strategies.NetworkFirst({ "cacheName":"api-cache","networkTimeoutSeconds":20, plugins: [new workbox.cacheableResponse.Plugin({ statuses: [ 0, 200 ] })] }), 'GET');
