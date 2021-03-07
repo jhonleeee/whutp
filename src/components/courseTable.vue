@@ -3,7 +3,9 @@
         <div>待加载项：{{loading_item}}</div>
         <div>已加载项：{{loaded_item}}</div>
         <div>红色指向较高级，绿色来自前置课程</div>
+        <div class="graph-container">
         <graph id="graph1" style="overflow:scroll !important"></graph>
+        </div>
     </div>
 </template>
 
@@ -15,6 +17,7 @@
         data:()=>({
             margin : {top: 20, right: 20, bottom: 20, left: 100},
             graph:null,
+            lockPreview:false,
             courses_table:null,
             node_list:[],
             link_list:[],
@@ -45,10 +48,11 @@
             this.$emit('set-loading',true);
         },
         methods:{
+           
             data_process(){
 axios({ method: "get",
             url: "https://migu.plus/whutp/api/detail.php",
-          }).then( function (response) {
+          }).then( function (response) {//TODO:avoid bind(this) by using arrow function
                         this.courses_table = response.data;
                         this.courses_table.courseData.forEach(function(semester){
                             semester.course.forEach(function(course){
@@ -98,12 +102,20 @@ axios({ method: "get",
                 // console.log("link list",this.link_list);
 
                 // console.log('create')
-                const svg = d3.select("graph")
-                    .append('svg')
-                    .attr('width', 1800)
-                    .attr('height', 3000)
-
-
+    //             const svg = d3.select("graph")
+    //                 .append('svg')
+    //                 .attr('width', "100%")
+    //                 .attr('height', "100%").call(d3.zoom().on("zoom", function () {
+    //     svg.attr("transform", d3.event.transform)
+    //  }))
+const svg = d3.select("#graph1")
+  .append("svg")
+.attr('width', 1600)
+                    .attr('height', 2000)
+    .call(d3.zoom().on("zoom", function (e) {
+    svg.attr("transform", e.transform)
+    console.log(e.transform)
+    }))
                 const height = 2000;
                 // eslint-disable-next-line no-unused-vars
                 const step= 80;
@@ -230,6 +242,8 @@ axios({ method: "get",
                         .attr("r", 30)
                         .attr("transform", d => `translate(${(d.group*1.5)*margin.left},${height/height_point[d.group]*(d.height-1)+margin.top})`)
                     .on("mouseover", (e,d) => {
+                        if(this.lockPreview)
+                        return
                         svg.classed("hover", true);
                         label.classed("primary", n =>  n === d );
                         label.classed("secondary", n =>
@@ -242,11 +256,16 @@ axios({ method: "get",
                             .filter(".secondary").raise();
                     })
                     .on("mouseout", () => {
+                        if(this.lockPreview)
+                        return
                         svg.classed("hover", false);
                         label.classed("primary", false);
                         label.classed("secondary", false);
                         path.classed("primary", false).order();
                         path.classed("secondary", false).order();
+                    }).on("click",()=>{
+                        this.lockPreview=!this.lockPreview
+                        console.log("lock?")
                     });
 
 
@@ -257,5 +276,12 @@ axios({ method: "get",
 </script>
 
 <style scoped>
-
+.graph-container{
+    width:100%;
+    height:100%;
+    overflow: hidden;
+    position: absolute;
+    left: 0px;
+    top:0px;
+}
 </style>
