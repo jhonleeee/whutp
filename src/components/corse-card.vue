@@ -95,7 +95,7 @@ export default {
       hover: false,
       copyBtn: "复制课名",
       copyBtnOnSuccess: false,
-      majorDic:['空','计','软','通'],
+      majorDic:['空','计','软','共'],
       cTypeDic:['选修','必修']
     };
   },

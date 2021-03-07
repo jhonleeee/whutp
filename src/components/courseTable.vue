@@ -1,10 +1,73 @@
 <template>
     <div>
+        <v-alert
+      border="left"
+      colored-border
+      elevation="2"
+      transition="scale-transition"
+      :value='loadingAlert'
+    style="width:80%;margin:10px auto auto auto;"
+    >
+    <v-progress-linear :value="Math.floor((loaded_item/loading_item)*100)"></v-progress-linear>
         <div>待加载项：{{loading_item}}</div>
         <div>已加载项：{{loaded_item}}</div>
         <div>红色指向较高级，绿色来自前置课程</div>
+        <div>在课程上面点击可以锁定/解锁预览状态</div>
+            </v-alert>
         <div class="graph-container">
         <graph id="graph1" style="overflow:scroll !important"></graph>
+        </div>
+        <div class="graph-card">
+              <v-card
+    class="mx-auto"
+    outlined
+    :v-if="previewSource.length||previewTarget.length"
+  >
+       <v-list-item two-line>
+      <v-list-item-content v-if="!previewItem">
+        <v-list-item-title class="headline">
+          课程依赖
+        </v-list-item-title>
+        <v-list-item-subtitle>将鼠标放置于课程上方以查看依赖</v-list-item-subtitle>
+      </v-list-item-content>
+          <v-list-item-content v-else>
+        <v-list-item-title class="headline">
+        {{previewItem.name}}
+        </v-list-item-title>
+        <v-list-item-subtitle>{{previewItem.credit}}学分,第{{Math.floor(previewItem.seme/3)+1}}学年{{(previewItem.seme%3)+1}}学期</v-list-item-subtitle>
+      </v-list-item-content>
+    </v-list-item>
+    <v-divider
+></v-divider>
+<div  class="d-flex justify-space-around mb-6">
+    <v-list
+      two-line
+      subheader
+      v-if="previewSource.length"
+    >
+      <v-subheader ><v-icon>mdi-dock-left</v-icon>前置课程</v-subheader>
+      <v-list-item v-for="source in previewSource" :key="source.course_id">
+        <v-list-item-content>
+          <v-list-item-title>{{source.name}}</v-list-item-title>
+          <v-list-item-subtitle>{{source.credit}}学分,第{{Math.floor(source.seme/3)+1}}学年{{(source.seme%3)+1}}学期</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+    <v-list
+      two-line
+      subheader
+      v-if="previewTarget.length"
+    >
+      <v-subheader>后置课程<v-icon>mdi-dock-right</v-icon></v-subheader>
+      <v-list-item v-for="target in previewTarget" :key="target.course_id">
+        <v-list-item-content>
+   <v-list-item-title>{{target.name}}</v-list-item-title>
+          <v-list-item-subtitle>{{target.credit}}学分,第{{Math.floor(target.seme/3)+1}}学年{{(target.seme%3)+1}}学期</v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+    </v-list>
+</div>
+  </v-card>
         </div>
     </div>
 </template>
@@ -15,9 +78,10 @@
     export default {
         name: "courseTable",
         data:()=>({
-            margin : {top: 20, right: 20, bottom: 20, left: 100},
+            // margin : {top: 20, right: 20, bottom: 20, left: 100},
             graph:null,
-            lockPreview:false,
+            loadingAlert:true,//showing alert
+            lockPreview:false,//troggle when click on circle
             courses_table:null,
             node_list:[],
             link_list:[],
@@ -27,7 +91,10 @@
             loaded_item:0,
             mounted_flag:false,
             courses_search:[],
-            semester_height_point:[]
+            semester_height_point:[],
+            previewSource:[],//for graph preview card
+            previewTarget:[],
+            previewItem:null
         }),
         created() {
             this.semester_height_point = new Array(20);
@@ -40,15 +107,27 @@
         },
         watch:{
           loaded_item(value){
-              if (value===this.loading_item && this.mounted_flag){this.create_dataMap();this.$emit('set-loading',false);}
+              if (value===this.loading_item && this.mounted_flag){this.create_dataMap();this.$emit('set-loading',false);this.loadingAlert=false;}
           },
         },
         mounted() {
             this.mounted_flag = true;
             this.$emit('set-loading',true);
+            this.loadingAlert=true;
         },
         methods:{
-           
+        graphPreviewCard(previewCourse){
+        //let previewSouce,previewTarget=[]
+        if(!previewCourse){
+                    this.previewSource = [];
+        this.previewTarget =[];
+        this.previewItem=null;
+        return;
+        }
+        this.previewSource = this.node_list.filter(obj=>previewCourse.sources.includes(obj.course_id));
+        this.previewTarget = this.node_list.filter(obj=>previewCourse.targets.includes(obj.course_id));
+        this.previewItem=previewCourse
+        },
             data_process(){
 axios({ method: "get",
             url: "https://migu.plus/whutp/api/detail.php",
@@ -61,6 +140,8 @@ axios({ method: "get",
                                     temp["id"]= course.course_id;
                                     temp["group"] = semester.semester;
                                     temp["height"] = ++this.semester_height_point[semester.semester];
+                                    temp["seme"]=semester.semester;
+                                    temp["credit"]=course.credit;
                                     temp["sources"] = [];
                                     temp["targets"] = [];
                                     this.semester_table[course.course_id] = semester.semester;
@@ -100,21 +181,12 @@ axios({ method: "get",
             create_dataMap(){
                 // console.log("node list",this.node_list);
                 // console.log("link list",this.link_list);
-
-                // console.log('create')
-    //             const svg = d3.select("graph")
-    //                 .append('svg')
-    //                 .attr('width', "100%")
-    //                 .attr('height', "100%").call(d3.zoom().on("zoom", function () {
-    //     svg.attr("transform", d3.event.transform)
-    //  }))
 const svg = d3.select("#graph1")
   .append("svg")
 .attr('width', 1600)
                     .attr('height', 2000)
     .call(d3.zoom().on("zoom", function (e) {
     svg.attr("transform", e.transform)
-    console.log(e.transform)
     }))
                 const height = 2000;
                 // eslint-disable-next-line no-unused-vars
@@ -242,6 +314,7 @@ const svg = d3.select("#graph1")
                         .attr("r", 30)
                         .attr("transform", d => `translate(${(d.group*1.5)*margin.left},${height/height_point[d.group]*(d.height-1)+margin.top})`)
                     .on("mouseover", (e,d) => {
+                        console.log(e)
                         if(this.lockPreview)
                         return
                         svg.classed("hover", true);
@@ -250,6 +323,7 @@ const svg = d3.select("#graph1")
                             n.sources.some(l => l === d.id)
                             || n.targets.some(l => l === d.id)
                         );
+                        this.graphPreviewCard(d)
                         path.classed("primary", l => l.source.id === d.id)
                             .filter(".primary").raise();
                         path.classed("secondary", l => l.target.id === d.id)
@@ -263,9 +337,9 @@ const svg = d3.select("#graph1")
                         label.classed("secondary", false);
                         path.classed("primary", false).order();
                         path.classed("secondary", false).order();
+                        this.graphPreviewCard(null);
                     }).on("click",()=>{
                         this.lockPreview=!this.lockPreview
-                        console.log("lock?")
                     });
 
 
@@ -283,5 +357,16 @@ const svg = d3.select("#graph1")
     position: absolute;
     left: 0px;
     top:0px;
+}
+.graph-card{
+    z-index: 15;
+    position: absolute;
+    right:15px;
+    bottom: 20px;
+    transition-duration: 0.5s;
+    opacity: 1;
+}
+.graph-card:hover{
+    opacity: 0.2;
 }
 </style>

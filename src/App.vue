@@ -181,7 +181,7 @@ export default {
       collapseScrollInvokeCount: 1,
       isLoading: true,//app bar loding circle
       show:false,
-      showSettingModel:true,
+      showSettingModel:false,
       majors:[{name:'计算机技术',id:0},{name:'软件工程',id:1}],
       grades:[{name:'8字班',id:0},{name:'9字班',id:1}],
       credits:[{'compulsory':43,'elective':27,majorId:0,gradeId:0},{'compulsory':45.5,'elective':24.5,majorId:1,gradeId:0}],
