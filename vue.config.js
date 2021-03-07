@@ -15,12 +15,12 @@ module.exports = {
     // configure the workbox plugin
     workboxPluginMode: 'GenerateSW',
     workboxOptions: {
-      cacheId:'whutpV0.01',
+      cacheId:'whutpV0.02',
       cleanupOutdatedCaches:true,
       runtimeCaching: [
         {
           urlPattern: new RegExp('whutp'),
-          handler: 'NetworkFirst',
+          handler: 'StaleWhileRevalidate',
           options: {
             networkTimeoutSeconds: 20,
             cacheName: 'api-cache',
