@@ -19,10 +19,9 @@
           <v-list-item-avatar>
             <img :src="user.avarta" />
           </v-list-item-avatar>
-
           <v-list-item-content>
-            <v-list-item-title>{{user.name}}</v-list-item-title>
-            <v-list-item-subtitle>{{user.bio}}</v-list-item-subtitle>
+            <v-list-item-title>{{majors.find(obj=>obj.id==majorSource.major).name}}</v-list-item-title>
+            <v-list-item-subtitle>{{grades.find(obj=>obj.id==majorSource.grade).name}}</v-list-item-subtitle>
           </v-list-item-content>
         </v-list-item>
         <v-list-group :value="true" prepend-icon="mdi-cog-outline">
@@ -40,6 +39,12 @@
             <v-icon>mdi-translate</v-icon>
         </v-list-item-icon>
         <v-list-item-title>{{$t('drawer.language')}}</v-list-item-title>
+    </v-list-item>
+      <v-list-item link @click="handleMajorDialogDisplay">
+              <v-list-item-icon>
+            <v-icon>mdi-school-outline</v-icon>
+        </v-list-item-icon>
+        <v-list-item-title>{{$t('drawer.major')}}</v-list-item-title>
     </v-list-item>
 </v-list-group>
         <v-divider></v-divider>
@@ -59,7 +64,8 @@
 </template>
 <script>
 export default {
-  props: ["bg"],
+  props: {bg:String,majorSource:Object,majors:Array,
+grades:Array},
   data() {
     return {
       drawer: true,
@@ -94,6 +100,9 @@ export default {
       }else{
           this.$i18n.locale='zh'
       }
+    },
+    handleMajorDialogDisplay(){
+      this.$emit('change-major-setting-dialog',true)
     }
   }
 };

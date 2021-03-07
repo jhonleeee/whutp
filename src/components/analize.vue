@@ -233,8 +233,12 @@
       COURSECARD,
       PARABAR
     },
+    props:{
+          /*for Credit counter-BEGIN*/
+          creditRequire:{'compulsory':27.5,'elective':27},
+          /*for Credit counter-END*/
+    },
     mounted:function(){
-
       const localCourseData = localStorage.getItem("courseData");
       if(localCourseData!=null){
         this.courseData = JSON.parse(localCourseData);
@@ -531,9 +535,6 @@
           //
           parseResultText: "当前课程导入还没有成功哦，重试一下吧",
           /*for Course Sheet-END*/
-          /*for Credit counter-BEGIN*/
-          creditRequire:{'compulsory':27.5,'elective':27},
-          /*for Credit counter-END*/
           desserts: [{
               name: "Frozen Yogurt",
               calories: 159,

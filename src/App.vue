@@ -37,7 +37,11 @@
     <!--App drawer-contains navigation tags and style setting options-->
     <DRAWER
       @expand-bar="collapseOnScroll = $event"
+      @change-major-setting-dialog="handleMajorSettingDialog"
       :bg="drawerBg"
+      :majorSource="majorSource"
+       :majors='majors'
+       :grades='grades'
       ref="drawer"
       @mouseleave="collapseOnScroll = true"
     ></DRAWER>
@@ -47,9 +51,9 @@
         @wheel="scrollTopBarShow"
          transition="scale-transition"
     >
-
+      <SETINDLG :display='showSettingModel' :major-source='majorSource' :majors='majors' :grades='grades' @change-major='handleChangeMajor'></SETINDLG>
       <v-slide-x-transition>
-        <router-view @set-loading="setLoading"></router-view>
+        <router-view @set-loading="setLoading" :creditRequire='credits.find(obj=>obj.majorId==majorSource.major)'></router-view>
         </v-slide-x-transition>
 
     </v-main>
@@ -59,12 +63,13 @@
 <script>
 //import {jsPlumb} from 'jsplumb';//https://zhuanlan.zhihu.com/p/41808577
 import DRAWER from "./components/drawer";//Drawer in the left side of App
-import DRAWERBG from '@/assets/image/bg/drawerImg.jpeg'//background img of App drawer
-
+import DRAWERBG from '@/assets/image/bg/drawerImg.jpeg';//background img of App drawer
+import SETINDLG from './components/SettingDialog';
 export default {
   name: "App",
   components: {
     DRAWER,
+    SETINDLG
   },
   computed: {
     appBarShow() {
@@ -125,6 +130,15 @@ export default {
         }
       }
     },
+    handleMajorSettingDialog(display){
+      this.showSettingModel=display
+    },
+    handleChangeMajor(newMajor){//when change mojor,academy etc. in SettingDialog
+    this.majorSource=newMajor;
+    this.handleMajorSettingDialog(false);
+    console.log(newMajor)
+    }
+    ,
     showDrawer() {
       this.$refs.drawer.drawer = true;
     },
@@ -145,6 +159,9 @@ export default {
 } else {
   this.$vuetify.theme.dark=false;
 }
+//load user preferences
+  //load user major
+  
     //let jsPlumbIns = jsPlumb.getInstance();
     //  jsPlumbIns.ready(function () {
     //       jsPlumbIns.connect({
@@ -163,7 +180,16 @@ export default {
       collapseScrollCombo: 0,
       collapseScrollInvokeCount: 1,
       isLoading: true,//app bar loding circle
-      show:false
+      show:false,
+      showSettingModel:true,
+      majors:[{name:'计算机技术',id:0},{name:'软件工程',id:1}],
+      grades:[{name:'8字班',id:0},{name:'9字班',id:1}],
+      credits:[{'compulsory':43,'elective':27,majorId:0,gradeId:0},{'compulsory':45.5,'elective':24.5,majorId:1,gradeId:0}],
+      majorSource:{
+        'grade':1,
+        'major':1,
+        'academy':0
+      }
     };
   },
 };
