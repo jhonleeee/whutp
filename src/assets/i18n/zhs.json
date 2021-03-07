@@ -39,6 +39,7 @@
     "notfound":{
         "info":"这个页面还没有被开拓...",
         "back":"上一页",
-        "home":"首页"
+        "home":"首页",
+        "github":"在 GitHub 交流沟通"
     }
 }

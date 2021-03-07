@@ -314,7 +314,6 @@ const svg = d3.select("#graph1")
                         .attr("r", 30)
                         .attr("transform", d => `translate(${(d.group*1.5)*margin.left},${height/height_point[d.group]*(d.height-1)+margin.top})`)
                     .on("mouseover", (e,d) => {
-                        console.log(e)
                         if(this.lockPreview)
                         return
                         svg.classed("hover", true);

@@ -18,7 +18,7 @@
 
 <style scoped>
 .transBadge{
-  margin: 0 auto;
+  margin: 0 auto 0 10px;
   position: absolute;
   left:0px;
   top:0px;

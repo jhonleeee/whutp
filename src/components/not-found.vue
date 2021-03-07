@@ -15,7 +15,8 @@
   <div class="buttons-con">
     <div class="action-link-wrap">
       <a onclick="history.back(-1)"><v-btn>{{$t("notfound.back")}}</v-btn></a>
-      <a href="/"><v-btn color="primary">{{$t("notfound.home")}}</v-btn></a>
+      <a href="/"><v-btn>{{$t("notfound.home")}}</v-btn></a>
+      <a href="https://github.com/jhonleeee/whutp"><v-btn color="primary">{{$t("notfound.github")}}</v-btn></a>
     </div>
   </div>
 </div>
@@ -58,6 +59,9 @@ svg {
 display: flex;
 flex-direction: row;
 justify-content: space-around;
+flex-wrap: wrap;
+align-content: space-around;
+height: 110px;
 }
 .message-box h1 {
   font-size: 60px;

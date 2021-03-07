@@ -39,6 +39,7 @@
 "notfound":{
     "info":"This page is still missing...",
     "back":"Back",
-    "home":"Home"
+    "home":"Home",
+    "github":"Ceate issue on GitHub"
 }
 }

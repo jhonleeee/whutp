@@ -24,6 +24,15 @@
         </v-btn>
       </template>
     </v-snackbar>
+     <v-alert
+      border="top"
+      colored-border
+      type="info"
+      elevation="2"
+      class="usage-info"
+    >
+      在右下角导入教务系统信息分析学分，在左侧边栏修改专业或者年级
+    </v-alert>
     <div class="courseBox" :key="'t' + termData.semester" v-for="termData in courseData.courseData">
       <PARABAR :bar-id="termData.semester" :id="'seme'+termData.semester"></PARABAR>
       <v-divider inset></v-divider>
@@ -203,12 +212,24 @@
           <v-icon v-else> mdi-widgets-outline </v-icon>
         </v-btn>
       </template>
-      <v-btn fab dark small color="green" @click="openSeleSheet">
+      <v-tooltip left>
+         <template v-slot:activator="{ on, attrs }">
+      <v-btn fab dark small color="green" @click="openSeleSheet"  v-bind="attrs"
+          v-on="on">
         <v-icon>mdi-pencil</v-icon>
       </v-btn>
-            <v-btn fab dark small color="light-green" @click="sortCourse">
+         </template>
+      <span>导入教务系统</span>
+      </v-tooltip>
+      <v-tooltip left>
+         <template v-slot:activator="{ on, attrs }">
+            <v-btn fab dark small color="light-green" @click="sortCourse"  v-bind="attrs"
+          v-on="on">
         <v-icon>mdi-sort</v-icon>
       </v-btn>
+         </template>
+              <span>排序</span>
+      </v-tooltip>
     </v-speed-dial>
     <div id="creditCounter">
  <v-chip color="light-blue lighten-2" text-color="white">
@@ -535,47 +556,6 @@
           //
           parseResultText: "当前课程导入还没有成功哦，重试一下吧",
           /*for Course Sheet-END*/
-          desserts: [{
-              name: "Frozen Yogurt",
-              calories: 159,
-            },
-            {
-              name: "Ice cream sandwich",
-              calories: 237,
-            },
-            {
-              name: "Eclair",
-              calories: 262,
-            },
-            {
-              name: "Cupcake",
-              calories: 305,
-            },
-            {
-              name: "Gingerbread",
-              calories: 356,
-            },
-            {
-              name: "Jelly bean",
-              calories: 375,
-            },
-            {
-              name: "Lollipop",
-              calories: 392,
-            },
-            {
-              name: "Honeycomb",
-              calories: 408,
-            },
-            {
-              name: "Donut",
-              calories: 452,
-            },
-            {
-              name: "KitKat",
-              calories: 518,
-            },
-          ],
           seletedCourseData: null,
           courseData: {
             semesterCount: 0,
@@ -594,7 +574,10 @@
     margin: 20px auto 20px auto;
     position: relative;
   }
-
+  .usage-info{
+    width: 50%;
+    margin:20px;
+  }
   .columbox::-webkit-scrollbar {
     height: 0px;
   }
@@ -673,6 +656,10 @@ margin-right: 5px;
     margin: 5px auto 50px auto;
     position: relative;
     flex-wrap: wrap;
+  }
+  .usage-info{
+    width:90%;
+    margin:5px;
   }
   }
 </style>
