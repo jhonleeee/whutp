@@ -1,11 +1,11 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "b284d28270456a5f4d2b",
-    "url": "/whutp/css/app.a7054f47.css"
+    "revision": "7633168f4b86411c7cba",
+    "url": "/whutp/css/app.32c7a12a.css"
   },
   {
-    "revision": "569bdcc4aa8d29b847eb",
-    "url": "/whutp/css/chunk-vendors.2ea48eed.css"
+    "revision": "9a28a1bf1d60d26192c5",
+    "url": "/whutp/css/chunk-vendors.86abe5f7.css"
   },
   {
     "revision": "8822400de4a6dfa87c4decce43fedeac",
@@ -20,16 +20,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/whutp/img/memphis-colorful.8b33b229.png"
   },
   {
-    "revision": "ff28924f6c8e7318d658004857488f82",
+    "revision": "f066da47b6dda799b916ac5d51dae4e1",
     "url": "/whutp/index.html"
   },
   {
-    "revision": "b284d28270456a5f4d2b",
-    "url": "/whutp/js/app.11bfb4d9.js"
+    "revision": "7633168f4b86411c7cba",
+    "url": "/whutp/js/app.de6e6a42.js"
   },
   {
-    "revision": "569bdcc4aa8d29b847eb",
-    "url": "/whutp/js/chunk-vendors.bd03b491.js"
+    "revision": "9a28a1bf1d60d26192c5",
+    "url": "/whutp/js/chunk-vendors.a49b684d.js"
   },
   {
     "revision": "96bf558827d4e4edef88025fb780a789",
