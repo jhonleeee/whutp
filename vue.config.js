@@ -22,7 +22,6 @@ module.exports = {
           urlPattern: new RegExp('whutp'),
           handler: 'StaleWhileRevalidate',
           options: {
-            networkTimeoutSeconds: 20,
             cacheName: 'api-cache',
             cacheableResponse: {
               statuses: [0, 200]
