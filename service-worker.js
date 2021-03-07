@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/whutp/precache-manifest.24213fd11649ab74c771e6a74414f900.js"
+  "/whutp/precache-manifest.5e6bcf1d178a2f065ef880c0a38d87ef.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "whutpV0.02"});
