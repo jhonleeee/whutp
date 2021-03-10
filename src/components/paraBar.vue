@@ -36,7 +36,7 @@
 }
 .stikyTop{
   position: sticky;
-  top:80px;
+  top:0px;
   z-index: 10;
 }
 </style>
