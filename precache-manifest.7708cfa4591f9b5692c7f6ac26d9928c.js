@@ -1,7 +1,7 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "3858c440647552cfd998",
-    "url": "/whutp/css/app.b94d40c2.css"
+    "revision": "39b43e699c0aff9f51f7",
+    "url": "/whutp/css/app.50825f49.css"
   },
   {
     "revision": "3508271c3b0fb6528983",
@@ -20,12 +20,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/whutp/img/memphis-colorful.8b33b229.png"
   },
   {
-    "revision": "f5f591243d0ccf9a230459bc08b4297c",
+    "revision": "0f843e6a9a18c0bc103e794708264a32",
     "url": "/whutp/index.html"
   },
   {
-    "revision": "3858c440647552cfd998",
-    "url": "/whutp/js/app.57040de7.js"
+    "revision": "39b43e699c0aff9f51f7",
+    "url": "/whutp/js/app.fda00441.js"
   },
   {
     "revision": "3508271c3b0fb6528983",
