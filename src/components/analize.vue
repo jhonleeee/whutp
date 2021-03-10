@@ -207,8 +207,8 @@
     <v-speed-dial v-model="dialFab" direction="top" open-on-hover fixed transition="slide-y-reverse-transition"
       class="speedDial">
       <template v-slot:activator>
-        <v-btn v-model="dialFab" color="blue darken-2" dark fab>
-          <v-icon v-if="dialFab"> mdi-widgets </v-icon>
+        <v-btn v-model="dialFab" color="blue darken-2" dark fab     @click="handleToTop">
+          <v-icon v-if="dialFab"> mdi-arrow-up </v-icon>
           <v-icon v-else> mdi-widgets-outline </v-icon>
         </v-btn>
       </template>
@@ -233,10 +233,10 @@
     </v-speed-dial>
     <div id="creditCounter">
  <v-chip color="light-blue lighten-2" text-color="white">
-            <v-avatar left class="light-blue lighten-1">必</v-avatar>{{creditSele.compulsory}}/{{creditRequire.compulsory}}
+            <v-avatar left class="light-blue lighten-1">必</v-avatar><b>{{creditSele.compulsory}}</b>/{{creditRequire.compulsory}}
           </v-chip>
            <v-chip color="blue" text-color="white">
-            <v-avatar left class="light-blue lighten-1">选</v-avatar>{{creditSele.elective}}/{{creditRequire.elective}}
+            <v-avatar left class="light-blue lighten-1">选</v-avatar><b>{{creditSele.elective}}</b>/{{creditRequire.elective}}
           </v-chip>
     </div>
     <!--Testing component-->
@@ -256,7 +256,7 @@
     },
     props:{
           /*for Credit counter-BEGIN*/
-          creditRequire:{'compulsory':27.5,'elective':27},
+          creditRequire:{'compulsory':0,'elective':0},
           /*for Credit counter-END*/
     },
     mounted:function(){
@@ -498,6 +498,12 @@
                 })
                 });
         this.showingRely=false;
+      },
+      handleToTop(){
+        window.scrollTo({top:0,behavior:'smooth'})
+        this.snackbarNoti = false;
+        this.snackbarNotiText = "🚀biu~";
+        this.snackbarNoti = true;
       }
       },
       computed:{
@@ -566,6 +572,12 @@
     };
 </script>
 <style>
+.courseBox{
+  height: 100%;
+  width:100%;
+  position: relative;
+  overflow: scroll;
+}
   .columbox {
     width: 90%;
     overflow-x: scroll;
